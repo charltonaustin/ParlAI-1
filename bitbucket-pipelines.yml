@@ -1,0 +1,27 @@
+# Copying most of these steps from .circleci/pipelines-schema.json
+# This doesn't have all the testing and everything, this is only recreating the "Test installation instructions job flow"
+# There is a much larger version of this pipeline that would take more than 1-2 hours to create to have full test coverage 
+# and accurately recreate the multi-job/stage circle-ci version. The docs on bitbucket pipeline do not seem to support 
+# multi-job/stage workflows, so would require more time to streamline this with multiple bitbucket-pipelines.yml files to support this
+# https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/
+image: python:3.8.0
+pipelines:
+  default:
+    - step:
+        script:
+          - >-
+            echo "Fixes git"
+            ( [[ "$CIRCLE_BRANCH" != "main" ]] && git branch -f main origin/main ) || true
+          - >-
+            echo "Sets up the virtual environment"
+            mkdir -p ~/venv
+            virtualenv --python=python3 ~/venv
+            echo ". ~/venv/bin/activate" >> $BASH_ENV
+            . ~/venv/bin/activate
+            python --version
+          - >-
+            echo "Test installation instructions"
+            python -m pip install --progress-bar off --upgrade pip setuptools
+            python setup.py develop
+            parlai display_data -t integration_tests
+
