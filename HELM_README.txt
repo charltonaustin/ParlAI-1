@@ -11,7 +11,7 @@ multi-job/stage workflows, so would require more time to streamline this with mu
 https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/  
 
 ## 2 - Containerize the app with Docker
-Build Docker Container 
+Build Docker Container  
 ```bash
 # Rename Docker File
 mv Dockerfile.Helm Dockerfile
@@ -50,6 +50,6 @@ ParlAI version 1.5.1
 
 ## Tom's Thoughts
 
-For both major pieces of this assignment I can tell there are more things I should be doing, especially comparing the full circleci build manifest with what I've provided on the bitbucket example, but both lack of time and features and experience with bitbucket lead me to providing a less than ideal version. In practice I would take more time to develop the bitbucket pipeline to support the CI testing that is absolutely critical to evaluating builds. For Docker I would have preferred to have more time to develop a multi-stage Dockerfile, the image when installing all requirements and doing a "source" build is 3.85GB, which is pretty big for a container, everytime we would launch that task be it EKS or Fargate, it would have to wait and download a 4GB object, that's going to increase the network bill by quite a lot potentially. So if I had more time, I would look for more ways to cut the image size by dropping the source files after the build and just using the python package that is produced by `python setup.py develop`.   
+For both major pieces of this assignment I can tell there are more things I should be doing, especially comparing the full circleci build manifest with what I've provided on the bitbucket example, but both lack of time and features and experience with bitbucket lead me to providing a less than ideal version. In practice, I would take more time to develop the bitbucket pipeline to support the CI testing that is absolutely critical to evaluating builds. For Docker, I would have preferred to have more time to develop a multi-stage Dockerfile, the image when installing all requirements and doing a "source" build is 3.85GB, which is pretty big for a container, every time we would launch that task be it EKS or Fargate, it would have to wait and download a 4GB object, that's going to increase the network bill by quite a lot potentially. So if I had more time, I would look for more ways to cut the image size by dropping the source files after the build and just using the python package that is produced by `python setup.py develop`.  
 
-Thank you, this was fun. Tom Stewart
+Thank you, this was fun. Tom Stewart  
